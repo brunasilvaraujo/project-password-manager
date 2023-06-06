@@ -1,4 +1,8 @@
-function Form() {
+interface FormProps {
+  onHandleCancel: (arg: boolean) => void;
+}
+
+function Form({ onHandleCancel }: FormProps) {
   return (
     <div>
       <form>
@@ -19,7 +23,7 @@ function Form() {
           <input type="text" id="URL" />
         </label>
         <button>Cadastrar</button>
-        <button>Cancelar</button>
+        <button onClick={ () => onHandleCancel(false) }>Cancelar</button>
       </form>
     </div>
   );
