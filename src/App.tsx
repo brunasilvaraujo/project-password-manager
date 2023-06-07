@@ -31,42 +31,65 @@ function App() {
     });
   };
 
+  const valid = (valor: string | number, regex: any): boolean => {
+    if (!valor) return false;
+    return regex.test(valor);
+  };
+
   const validatedForm = () => {
-    const regexName = /[a-zA-Z]+/i;
-
-    const regexLogin = /[a-zA-Z]+/i;
-
-    const regexPassword = /[a-zA-Z]+/i;
+    const regexLyrics = /[a-zA-Z]+/i;
 
     const regexNumber = /[0-9]+/i;
 
     const regexCaracterSpecial = /[!@#$\-_?.:&%]+/i;
 
-    const isNameValid = regexName.test(data.name)
-      && data.name.length !== undefined;
+    const isNameValid = valid(data.name, regexLyrics);
 
-    const isLoginValid = regexLogin.test(data.login) && data.login.length > 0;
+    const isLoginValid = valid(data.login, regexLyrics);
 
-    const isPasswordValid = regexPassword.test(data.password)
-      && regexCaracterSpecial.test(data.password)
-      && regexNumber.test(data.password)
+    const isPasswordValid = valid(data.password, regexLyrics)
+      && valid(data.password, regexNumber)
+      && valid(data.password, regexCaracterSpecial)
       && data.password.length >= 8 && data.password.length <= 16;
 
     setForm(isNameValid && isLoginValid && isPasswordValid);
   };
 
+  const passwordCheck = 'valid-password-check';
+  const passwordInvalid = 'invalid-password-check';
+
   return (
     <div>
       <h1>Gerenciador de senhas</h1>
       {changeButton
-        ? (<Form
-            onHandleCancel={ setChangeButton }
-            handleChangeInput={ handleChange }
-            submitForm={ handleSubmit }
-            data={ data }
-            isFormValidated={ form }
-            isForm={ validatedForm }
-        />)
+        ? (
+          <div>
+            <Form
+              onHandleCancel={ setChangeButton }
+              handleChangeInput={ handleChange }
+              submitForm={ handleSubmit }
+              data={ data }
+              isFormValidated={ form }
+              isForm={ validatedForm }
+            />
+            <div>
+              <p
+                className={ (data.password.length >= 8)
+                  ? passwordCheck : passwordInvalid }
+              >
+                Possuir 8 ou mais caracteres
+              </p>
+              <p
+                className={ (data.password.length < 16)
+                  ? passwordCheck : passwordInvalid }
+              >
+                Possuir até 16 caracteres
+              </p>
+              <p className={ valid(data.password, /[a-zA-Z][0-9]+/i) ? passwordCheck : passwordInvalid }>Possuir letras e números</p>
+              <p className={ valid(data.password, /[!@#$\-_?.:&%]+/i) ? passwordCheck : passwordInvalid }>Possuir algum caractere especial</p>
+            </div>
+          </div>
+        )
         : (<button onClick={ () => setChangeButton(true) }>Cadastrar nova senha</button>)}
     </div>
   );
