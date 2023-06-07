@@ -5,3 +5,7 @@
 .invalid-password-check {
   color: #f58989;
 }
+
+a {
+  text-decoration: none;
+}

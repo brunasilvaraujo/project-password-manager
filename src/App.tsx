@@ -11,6 +11,7 @@ function App() {
     password: '',
     url: '',
   });
+  const [savedInfos, setSavedInfos] = useState<ValidateForm[]>([]);
   const [form, setForm] = useState<boolean>(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,6 +23,11 @@ function App() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const newSavedInfos = [...savedInfos, data];
+
+    setSavedInfos(newSavedInfos);
+
+    setChangeButton(false);
 
     setData({
       name: '',
@@ -90,7 +96,36 @@ function App() {
             </div>
           </div>
         )
-        : (<button onClick={ () => setChangeButton(true) }>Cadastrar nova senha</button>)}
+        : (
+          <>
+            <button onClick={ () => setChangeButton(true) }>Cadastrar nova senha</button>
+            <section>
+              <div>
+                {savedInfos.length === 0
+                  ? <h2>Nenhuma senha cadastrada</h2> : <h2>Lista de senhas</h2>}
+                {savedInfos.map((info, index) => (
+                  <div key={ index }>
+                    <ul>
+                      <li>
+                        <a href={ info.url } target="_blank" rel="noreferrer">
+                          {info.name}
+                        </a>
+                      </li>
+                      <li>
+                        <p>Login:</p>
+                        <p>{info.login}</p>
+                      </li>
+                      <li>
+                        <p>Senha:</p>
+                        <p>{info.password}</p>
+                      </li>
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
     </div>
   );
 }
