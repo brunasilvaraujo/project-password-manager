@@ -4,19 +4,22 @@ import Form from './components/Form';
 import { ValidateForm } from './components/types';
 
 function App() {
-  const [changeButton, setChangeButton] = useState<boolean>(false);
-  const [data, setData] = useState<ValidateForm>({
+  const initialData = {
     name: '',
     login: '',
     password: '',
     url: '',
-  });
+  };
+  const [changeButton, setChangeButton] = useState<boolean>(false);
+  const [data, setData] = useState<ValidateForm>(initialData);
+
   const [savedInfos, setSavedInfos] = useState<ValidateForm[]>([]);
   const [form, setForm] = useState<boolean>(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setData({
       ...data,
+      id: Date.now(),
       [event.target.name]: event.target.value,
     });
   };
@@ -64,6 +67,10 @@ function App() {
   const passwordCheck = 'valid-password-check';
   const passwordInvalid = 'invalid-password-check';
 
+  const deleteItem = (id: number | undefined): void => {
+    setSavedInfos(savedInfos.filter((info) => info.id !== id));
+  };
+
   return (
     <div>
       <h1>Gerenciador de senhas</h1>
@@ -103,8 +110,14 @@ function App() {
               <div>
                 {savedInfos.length === 0
                   ? <h2>Nenhuma senha cadastrada</h2> : <h2>Lista de senhas</h2>}
-                {savedInfos.map((info, index) => (
-                  <div key={ index }>
+                {savedInfos.map((info) => (
+                  <div key={ info.id }>
+                    <button
+                      data-testid="remove-btn"
+                      onClick={ () => deleteItem(info.id) }
+                    >
+                      X
+                    </button>
                     <ul>
                       <li>
                         <a href={ info.url } target="_blank" rel="noreferrer">
