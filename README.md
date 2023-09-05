@@ -1,10 +1,16 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# Gerenciador de Senhas
+
+Este é um projeto de um Gerenciador de Senhas desenvolvido em React. Com ele, os usuários podem cadastrar senhas e gerenciá-las de forma conveniente.
+
+## Funcionalidades
+
+- Cadastro de senhas com validação de critérios como comprimento mínimo e máximo, letras, números e caracteres especiais.
+- Lista de senhas cadastradas com opção para remoção.
+- Interface interativa que permite alternar entre o formulário de cadastro e a lista de senhas.
+
+## Tecnologias Utilizadas
+
+- React
+- JavaScript
+- HTML e CSS
+- TypeScript
